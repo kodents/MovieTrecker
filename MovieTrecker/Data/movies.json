@@ -1,0 +1,62 @@
+[
+  {
+    "Id": 1,
+    "Title": "Начало",
+    "Genre": "Sci-Fi",
+    "Director": "Кристофер Нолан",
+    "ReleaseYear": 2010,
+    "Rating": 9,
+    "Status": "Watched",
+    "WatchedDate": "2024-03-10T00:00:00Z"
+  },
+  {
+    "Id": 2,
+    "Title": "Зелёная миля",
+    "Genre": "Drama",
+    "Director": "Фрэнк Дарабонт",
+    "ReleaseYear": 1999,
+    "Rating": 9.5,
+    "Status": "Watched",
+    "WatchedDate": "2023-11-20T00:00:00Z"
+  },
+  {
+    "Id": 3,
+    "Title": "Дюна: Часть вторая",
+    "Genre": "Sci-Fi",
+    "Director": "Дени Вильнёв",
+    "ReleaseYear": 2024,
+    "Rating": 0,
+    "Status": "PlanToWatch",
+    "WatchedDate": null
+  },
+  {
+    "Id": 4,
+    "Title": "Тёмный рыцарь",
+    "Genre": "Action",
+    "Director": "Кристофер Нолан",
+    "ReleaseYear": 2008,
+    "Rating": 9.2,
+    "Status": "Watched",
+    "WatchedDate": "2023-08-15T00:00:00Z"
+  },
+  {
+    "Id": 5,
+    "Title": "Оппенгеймер",
+    "Genre": "Drama",
+    "Director": "Кристофер Нолан",
+    "ReleaseYear": 2023,
+    "Rating": 0,
+    "Status": "Watching",
+    "WatchedDate": null
+  },
+  {
+    "Id": 6,
+    "Title": "Ла-Ла Ленд",
+    "Genre": "Musical",
+    "Director": "Дэмьен Шазелл",
+    "ReleaseYear": 2016,
+    "Rating": 4,
+    "Status": "Dropped",
+    "WatchedDate": null
+  }
+]

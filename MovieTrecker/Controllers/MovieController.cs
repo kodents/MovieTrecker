@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieTrecker.Models;
+using MovieTrecker.Services;
 
 namespace MovieTrecker.Controllers
 {
@@ -8,54 +9,49 @@ namespace MovieTrecker.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
-        public static List<Movie> Movies = new List<Movie>
+        private MovieService movieService;
+
+        public MovieController()
         {
-            new Movie {
-                Id = 0, 
-                Director = "fawfwa", 
-                Ganre = "fawfaw",
-                Rating = 0,
-                ReleaseYear = 2020,
-                Status = Status.PlanToWatch,
-                Title = "fawfaw",
-                WatchedDate = null
-            },
-             new Movie {
-                Id = 1,
-                Director = "fa312wfwa",
-                Ganre = "fawfaw",
-                Rating = 0,
-                ReleaseYear = 2023,
-                Status = Status.Watching,
-                Title = "gawgawgaw",
-                WatchedDate = null
-            }
-        };
+            movieService = new MovieService();
+        }
 
         [HttpGet]
         public List<Movie> GetMovies()
         {
-            return Movies;
+            return movieService.GetMovies();
+        }
+
+        [HttpGet("genre/{genre}")]
+        public List<Movie> GetMoviesByGenre([FromRoute] string genre)
+        {
+            return movieService.GetMoviesByGenre(genre);
+        }
+
+        [HttpGet("{id}")]
+        public Movie GetMovie([FromRoute] int id)
+        {
+            return movieService.GetMovie(id);
         }
 
         [HttpPost]
         public string AddMovie(Movie movie)
         {
-            Movies.Add(movie);
+            movieService.AddMovie(movie);
             return "Ок";
         }
 
         [HttpDelete]
         public string DeleteMovie(int id)
         {
-            Movies.RemoveAt(id);
+            movieService.DeleteMovie(id);
             return "Ok";
         }
 
         [HttpPut("{id}")]
         public string UpdateMovie([FromRoute] int id, [FromBody] Movie movie) 
         {
-            Movies[id] = movie;
+            movieService.UpdateMovie(id, movie);
             return "Ok";
         }
     }
