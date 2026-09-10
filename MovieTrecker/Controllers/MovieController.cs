@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MovieTrecker.Dtos;
 using MovieTrecker.Models;
 using MovieTrecker.Services;
 
@@ -9,49 +10,62 @@ namespace MovieTrecker.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
-        private MovieService movieService;
+        private IMovieService _movieService;
 
-        public MovieController()
+        public MovieController(IMovieService movieService)
         {
-            movieService = new MovieService();
+            _movieService = movieService;
         }
 
         [HttpGet]
         public List<Movie> GetMovies()
         {
-            return movieService.GetMovies();
+            return _movieService.GetMovies();
         }
 
         [HttpGet("genre/{genre}")]
         public List<Movie> GetMoviesByGenre([FromRoute] string genre)
         {
-            return movieService.GetMoviesByGenre(genre);
+            return _movieService.GetMoviesByGenre(genre);
         }
+
+        [HttpGet("top-rated")]
+        public List<Movie> GetMoviesByGenre([FromQuery] int count)
+        {
+            return _movieService.GetTopRatedMovies(count);
+        }
+
+        [HttpGet("statistics")]
+        public Statistics GetStatistics()
+        {
+            return _movieService.GetStatistics();
+        }
+
 
         [HttpGet("{id}")]
         public Movie GetMovie([FromRoute] int id)
         {
-            return movieService.GetMovie(id);
+            return _movieService.GetMovie(id);
         }
 
         [HttpPost]
         public string AddMovie(Movie movie)
         {
-            movieService.AddMovie(movie);
+            _movieService.AddMovie(movie);
             return "Ок";
         }
 
         [HttpDelete]
         public string DeleteMovie(int id)
         {
-            movieService.DeleteMovie(id);
+            _movieService.DeleteMovie(id);
             return "Ok";
         }
 
         [HttpPut("{id}")]
         public string UpdateMovie([FromRoute] int id, [FromBody] Movie movie) 
         {
-            movieService.UpdateMovie(id, movie);
+            _movieService.UpdateMovie(id, movie);
             return "Ok";
         }
     }

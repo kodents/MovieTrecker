@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Mvc;
+using MovieTrecker.Dtos;
 using MovieTrecker.Models;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace MovieTrecker.Services
 {
-    public class MovieService
+    public class MovieService : IMovieService
     {
-        private readonly List<Movie> _movies = new ();
+        private readonly List<Movie> _movies = new List<Movie>();
         private readonly string _filePath = Path.Combine(AppContext.BaseDirectory, "Data", "movies.json");
 
         public MovieService()
@@ -61,11 +62,31 @@ namespace MovieTrecker.Services
         public List<Movie> GetMoviesByGenre(string genre)
         {
             var result = _movies.Where(m => m.Genre == genre).ToList();
+            return result;
+        }
+
+        public List<Movie> GetTopRatedMovies(int count)
+        {
+            var result = _movies
+                .OrderByDescending(m => m.Rating)
+                .Take(count)
+                .ToList();
 
             return result;
         }
 
-        public Movie GetMovie([FromRoute] int id)
+        public Statistics GetStatistics()
+        {
+            var result = new Statistics
+            {
+                Count = _movies.Count,
+                AvgRating = Math.Round(_movies.Average(m => m.Rating), 2),
+            };
+
+            return result;
+        }
+
+        public Movie GetMovie(int id)
         {
             return _movies[id];
         }
@@ -75,14 +96,13 @@ namespace MovieTrecker.Services
             SaveToFile();
             return "Ок";
         }
-
         public string DeleteMovie(int id)
         {
             _movies.RemoveAt(id - 1);
             SaveToFile();
             return "Ok";
         }
-        public string UpdateMovie([FromRoute] int id, [FromBody] Movie movie)
+        public string UpdateMovie(int id, Movie movie)
         {
             _movies[id] = movie;
             SaveToFile();
@@ -90,3 +110,5 @@ namespace MovieTrecker.Services
         }
     }
 }
+
+//DI - Dependency Injection
